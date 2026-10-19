@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- ★ スマホ最適化の必須設定 -->
+  <title>死後裁きに合うみくじ</title>
+
+  <style>
+    body {
+      text-align: center;
+      font-family: "Yu Gothic", system-ui, sans-serif;
+      background: #000;
+      color: #f5f5f5;
+      padding-top: 40px;
+    }
+
+    .logo {
+      width: 200px;
+      margin-bottom: 20px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      filter: none;
+      box-shadow: none;
+    }
+
+    .box {
+      background: #1c1c1c;
+      padding: 30px;
+      border-radius: 12px;
+      display: inline-block;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+      border: 1px solid #aa0000;
+      max-width: 520px;
+      width: 90%; /* ★ スマホで横幅がはみ出ない */
+    }
+
+    h1, .subtitle, #fortune {
+      font-family: "Yu Mincho", "Shippori Mincho", "Noto Serif JP", serif;
+      letter-spacing: 0.12em;
+    }
+
+    h1 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-size: 1.6rem;
+    }
+
+    .subtitle {
+      font-size: 0.9rem;
+      color: #bbbbbb;
+      margin-bottom: 20px;
+    }
+
+    #fortune {
+      font-size: 2.4rem;
+      margin: 20px 0 10px;
+      color: #ff4444;
+      font-weight: bold;
+    }
+
+    #judgment {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      margin-bottom: 25px;
+    }
+
+    button {
+      background: #aa0000;
+      color: #fff;
+      border: none;
+      padding: 14px 32px;
+      font-size: 1.1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      letter-spacing: 0.15em;
+    }
+
+    button:hover {
+      background: #cc2222;
+    }
+
+    /* ★ スマホ最適化（画面幅480px以下） */
+    @media (max-width: 480px) {
+      body {
+        padding-top: 20px;
+      }
+
+      .logo {
+        width: 150px; /* ロゴを少し小さく */
+        margin-bottom: 15px;
+      }
+
+      .box {
+        padding: 20px; /* 余白を減らして収まり良く */
+      }
+
+      h1 {
+        font-size: 1.3rem;
+      }
+
+      .subtitle {
+        font-size: 0.8rem;
+      }
+
+      #fortune {
+        font-size: 2rem;
+      }
+
+      #judgment {
+        font-size: 1rem;
+      }
+
+      button {
+        padding: 12px 24px;
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="box">
+    <h1>死後裁きに合うみくじ</h1>
+    <div class="subtitle">― 本日のあなたの裁きレベルは ―</div>
+
+    <div id="fortune">？</div>
+    <div id="judgment">今日の裁き</div>
+
+    <button onclick="drawJudgment()">裁きを受ける</button>
+  </div>
+
+  <script>
+    const data = {
+      "大吉": [
+        "自動販売機で当たりが出るが1000円のお釣りがすべて100円玉と10円玉。",
+        "天気が崩れる予報で電車に乗っている時だけ雨が降る。",
+        "目覚ましより1分早く自然に目が覚める。思考停止していると鳴る。"
+      ],
+      "中吉": [
+        "靴紐がほどけしゃがんだら何かが破れる音がする。",
+        "エレベーターに自分だけ乗れない。",
+        "自分が見ていないとスマホが充電されない。",
+      ],
+      "小吉": [
+        "自販機の取り出し口からセミが出てくる。",
+        "玄関のドアノブにバッタがとまっている。",
+        "車のダッシュボードにカメムシがいる。",
+      ],
+      "吉": [
+        "商談前に食べたカレーが辛すぎて汗がとまらず心配される。",
+        "濁点をつけ忘れてLINEを送ってしまう。",
+        "電車の端の席に座ると横で立ってるやつが座席にもたれかかってくる。",
+      ],
+      "末吉": [
+        "電車の中でカナブンに襲われる。",
+        "胡椒の蓋が外れてラーメンにすべて降り注ぎ店主にキレられる。",
+        "寝て起きたら足がつる夢を見て起きたら足がつっている。",
+      ],
+      "凶": [
+        "坂の上から野菜や果物が転がってきてみんなで回収するが、自分の担当がスイカ。",
+        "服を裏返しに着てしまい正そうとするが、実は裏返っていなかったことをあとで知る。",
+        "並んだレジが異様に遅いところでひとつ前の客が店員にキレ始めて業務が停止する。",
+      ],
+      "大凶": [
+        "小学生に蹴りを入れられる。",
+        "スマホを家に忘れ絶望するが、実際には紛失している。",
+        "タクシーの運転手がやたら喋る。相槌を打つ前に次の話をしている。"
+      ],
+    };
+
+    const fortunes = Object.keys(data);
+
+    function drawJudgment() {
+      const fortuneIndex = Math.floor(Math.random() * fortunes.length);
+      const fortune = fortunes[fortuneIndex];
+
+      const judgments = data[fortune];
+      const judgmentIndex = Math.floor(Math.random() * judgments.length);
+      const judgment = judgments[judgmentIndex];
+
+      document.getElementById("fortune").textContent = fortune;
+      document.getElementById("judgment").textContent = judgment;
+    }
+  </script>
+
+</body>
+</html>
