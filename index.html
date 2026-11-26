@@ -1,189 +1,264 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- ★ スマホ最適化の必須設定 -->
-  <title>死後裁きに合うみくじ</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>死後裁きに合うみくじ</title>
 
-  <style>
-    body {
-      text-align: center;
-      font-family: "Yu Gothic", system-ui, sans-serif;
-      background: #000;
-      color: #f5f5f5;
-      padding-top: 40px;
-    }
+<style>
+:root{
+  --bg:#f5f5f5;
+  --text:#222;
+  --card:#ffffff;
+  --border:#dddddd;
+  --fortune:#cc0000;
+  --sub:#666666;
+  --button:#aa0000;
+  --button-hover:#cc2222;
+}
 
-    .logo {
-      width: 200px;
-      margin-bottom: 20px;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      filter: none;
-      box-shadow: none;
-    }
+body.dark{
+  --bg:#000;
+  --text:#f5f5f5;
+  --card:#1c1c1c;
+  --border:#aa0000;
+  --fortune:#ff4444;
+  --sub:#bbbbbb;
+}
 
-    .box {
-      background: #1c1c1c;
-      padding: 30px;
-      border-radius: 12px;
-      display: inline-block;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.6);
-      border: 1px solid #aa0000;
-      max-width: 520px;
-      width: 90%; /* ★ スマホで横幅がはみ出ない */
-    }
+*{
+  box-sizing:border-box;
+}
 
-    h1, .subtitle, #fortune {
-      font-family: "Yu Mincho", "Shippori Mincho", "Noto Serif JP", serif;
-      letter-spacing: 0.12em;
-    }
+body{
+  margin:0;
+  padding:20px;
+  min-height:100vh;
 
-    h1 {
-      margin-top: 0;
-      margin-bottom: 10px;
-      font-size: 1.6rem;
-    }
+  text-align:center;
+  font-family:"Yu Gothic",system-ui,sans-serif;
 
-    .subtitle {
-      font-size: 0.9rem;
-      color: #bbbbbb;
-      margin-bottom: 20px;
-    }
+  background:var(--bg);
+  color:var(--text);
 
-    #fortune {
-      font-size: 2.4rem;
-      margin: 20px 0 10px;
-      color: #ff4444;
-      font-weight: bold;
-    }
+  transition:.3s;
+}
 
-    #judgment {
-      font-size: 1.1rem;
-      line-height: 1.7;
-      margin-bottom: 25px;
-    }
+.topbar{
+  max-width:700px;
+  margin:0 auto 15px;
+  display:flex;
+  justify-content:flex-end;
+}
 
-    button {
-      background: #aa0000;
-      color: #fff;
-      border: none;
-      padding: 14px 32px;
-      font-size: 1.1rem;
-      border-radius: 6px;
-      cursor: pointer;
-      letter-spacing: 0.15em;
-    }
+.theme-btn{
+  border:none;
+  border-radius:999px;
+  padding:10px 16px;
+  cursor:pointer;
+  font-size:0.9rem;
+}
 
-    button:hover {
-      background: #cc2222;
-    }
+.logo{
+  width:100%;
+  max-width:650px;
+  height:auto;
+  display:block;
+  margin:0 auto 25px;
+}
 
-    /* ★ スマホ最適化（画面幅480px以下） */
-    @media (max-width: 480px) {
-      body {
-        padding-top: 20px;
-      }
+.box{
+  background:transparent;
+  border:none;
 
-      .logo {
-        width: 150px; /* ロゴを少し小さく */
-        margin-bottom: 15px;
-      }
+  max-width:700px;
+  width:90%;
 
-      .box {
-        padding: 20px; /* 余白を減らして収まり良く */
-      }
+  margin:0 auto;
 
-      h1 {
-        font-size: 1.3rem;
-      }
+  padding:20px;
 
-      .subtitle {
-        font-size: 0.8rem;
-      }
+  box-shadow:none;
+}
 
-      #fortune {
-        font-size: 2rem;
-      }
+h1,
+.subtitle,
+#fortune,
+#judgment{
+  font-family:"Zen Old Mincho", serif;
+}
 
-      #judgment {
-        font-size: 1rem;
-      }
+h1{
+  margin-top:0;
+  margin-bottom:10px;
+  font-size:1.6rem;
+}
 
-      button {
-        padding: 12px 24px;
-        font-size: 1rem;
-      }
-    }
-  </style>
+.subtitle{
+  font-family:"Zen Old Mincho",serif;
+  font-size:1.3rem;
+  letter-spacing:.2em;
+  margin-bottom:15px;
+  color:var(--text);
+}
+#fortune{
+  font-size:5rem;
+  font-weight:bold;
+  color:var(--fortune);
+
+  margin:30px 0 20px;
+
+  text-shadow:
+    0 0 10px rgba(255,0,0,.4),
+    0 0 20px rgba(255,0,0,.3);
+}
+
+#judgment{
+  font-size:1.1rem;
+  line-height:1.7;
+  margin-bottom:10px;
+  min-height:70px;
+}
+
+.draw-btn{
+  background:var(--button);
+  color:#fff;
+  border:none;
+  padding:14px 32px;
+  font-size:1.1rem;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.draw-btn:hover{
+  background:var(--button-hover);
+}
+
+@media (max-width:480px){
+
+  .logo{
+    max-width:100%;
+  }
+
+  h1{
+    font-size:1.5rem;
+  }
+
+  #fortune{
+    font-size:3rem;
+  }
+
+  #judgment{
+    font-size:1.1rem;
+  }
+
+  .draw-btn{
+    width:90%;
+    max-width:320px;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <div class="box">
-    <h1>死後裁きに合うみくじ</h1>
-    <div class="subtitle">― 本日のあなたの裁きレベルは ―</div>
+<div class="topbar">
+  <button class="theme-btn" onclick="toggleTheme()">
+    🌙 ダークモード
+  </button>
+</div>
 
-    <div id="fortune">？</div>
-    <div id="judgment">今日の裁き</div>
+<img
+  id="logo"
+  class="logo"
+  src="banner-white.jpg"
+  alt="死後裁きサバイバル"
+>
 
-    <button onclick="drawJudgment()">裁きを受ける</button>
+<div class="box">
+
+  <!-- <h1>死後裁きに合うみくじ</h1> -->
+
+  <div class="subtitle">
+    ― 本日のあなたの裁きレベルは ―
   </div>
 
-  <script>
-    const data = {
-      "大吉": [
-        "自動販売機で当たりが出るが1000円のお釣りがすべて100円玉と10円玉。",
-        "天気が崩れる予報で電車に乗っている時だけ雨が降る。",
-        "目覚ましより1分早く自然に目が覚める。思考停止していると鳴る。"
-      ],
-      "中吉": [
-        "靴紐がほどけしゃがんだら何かが破れる音がする。",
-        "エレベーターに自分だけ乗れない。",
-        "自分が見ていないとスマホが充電されない。",
-      ],
-      "小吉": [
-        "自販機の取り出し口からセミが出てくる。",
-        "玄関のドアノブにバッタがとまっている。",
-        "車のダッシュボードにカメムシがいる。",
-      ],
-      "吉": [
-        "商談前に食べたカレーが辛すぎて汗がとまらず心配される。",
-        "濁点をつけ忘れてLINEを送ってしまう。",
-        "電車の端の席に座ると横で立ってるやつが座席にもたれかかってくる。",
-      ],
-      "末吉": [
-        "電車の中でカナブンに襲われる。",
-        "胡椒の蓋が外れてラーメンにすべて降り注ぎ店主にキレられる。",
-        "寝て起きたら足がつる夢を見て起きたら足がつっている。",
-      ],
-      "凶": [
-        "坂の上から野菜や果物が転がってきてみんなで回収するが、自分の担当がスイカ。",
-        "服を裏返しに着てしまい正そうとするが、実は裏返っていなかったことをあとで知る。",
-        "並んだレジが異様に遅いところでひとつ前の客が店員にキレ始めて業務が停止する。",
-      ],
-      "大凶": [
-        "小学生に蹴りを入れられる。",
-        "スマホを家に忘れ絶望するが、実際には紛失している。",
-        "タクシーの運転手がやたら喋る。相槌を打つ前に次の話をしている。"
-      ],
-    };
+  <div id="fortune">？</div>
 
-    const fortunes = Object.keys(data);
+  <div id="judgment">
+    今日の裁き
+  </div>
 
-    function drawJudgment() {
-      const fortuneIndex = Math.floor(Math.random() * fortunes.length);
-      const fortune = fortunes[fortuneIndex];
+  <button class="draw-btn" onclick="drawJudgment()">
+    裁きを受ける
+  </button>
 
-      const judgments = data[fortune];
-      const judgmentIndex = Math.floor(Math.random() * judgments.length);
-      const judgment = judgments[judgmentIndex];
+</div>
 
-      document.getElementById("fortune").textContent = fortune;
-      document.getElementById("judgment").textContent = judgment;
-    }
-  </script>
+<script src="judgments.js"></script>
+
+<script>
+
+const fortunes = Object.keys(data);
+
+function drawJudgment(){
+
+  const fortune =
+    fortunes[Math.floor(Math.random() * fortunes.length)];
+
+  const judgments = data[fortune];
+
+  const judgment =
+    judgments[Math.floor(Math.random() * judgments.length)];
+
+  document.getElementById("fortune").textContent = fortune;
+  
+    document.getElementById("judgment").textContent = judgment;
+}
+
+function applyTheme(theme){
+
+  const logo =
+    document.getElementById("logo");
+
+  const button =
+    document.querySelector(".theme-btn");
+
+  if(theme === "dark"){
+
+    document.body.classList.add("dark");
+
+    logo.src = "banner-black.jpg";
+
+    button.textContent = "☀ ライトモード";
+
+  }else{
+
+    document.body.classList.remove("dark");
+
+    logo.src = "banner-white.jpg";
+
+    button.textContent = "🌙 ダークモード";
+
+  }
+
+  localStorage.setItem("theme", theme);
+}
+
+function toggleTheme(){
+
+  if(document.body.classList.contains("dark")){
+    applyTheme("light");
+  }else{
+    applyTheme("dark");
+  }
+}
+
+applyTheme(
+  localStorage.getItem("theme") || "light"
+);
+
+</script>
 
 </body>
 </html>
