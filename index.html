@@ -52,11 +52,21 @@ body{
 }
 
 .theme-btn{
-  border:none;
+  background:#fff;
+  color:#444;
+  border:1px solid #ddd;
   border-radius:999px;
   padding:10px 16px;
-  cursor:pointer;
   font-size:0.9rem;
+
+  -webkit-tap-highlight-color: transparent;
+  appearance:none;
+  -webkit-appearance:none;
+
+  transition:
+    background .2s,
+    color .2s,
+    border-color .2s;
 }
 
 .logo{
