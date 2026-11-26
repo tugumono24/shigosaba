@@ -163,6 +163,24 @@ h1{
     max-width:320px;
   }
 }
+
+/* 天国モード */
+.theme-btn:hover{
+  background:#e5e5e5;
+}
+
+/* 地獄モード */
+
+body.dark .theme-btn{
+  background:#1c1c1c;
+  color:#ff6666;
+  border:1px solid #aa0000;
+}
+
+body.dark .theme-btn:hover{
+  background:#550000;
+}
+
 </style>
 </head>
 
@@ -170,7 +188,7 @@ h1{
 
 <div class="topbar">
   <button class="theme-btn" onclick="toggleTheme()">
-    🌙 ダークモード
+    💀 地獄モード
   </button>
 </div>
 
@@ -236,7 +254,7 @@ function applyTheme(theme){
 
     logo.src = "banner-black.jpg";
 
-    button.textContent = "☀ ライトモード";
+    button.textContent = "😇 天国モード";
 
   }else{
 
@@ -244,7 +262,7 @@ function applyTheme(theme){
 
     logo.src = "banner-white.jpg";
 
-    button.textContent = "🌙 ダークモード";
+    button.textContent = "💀 地獄モード";
 
   }
 
